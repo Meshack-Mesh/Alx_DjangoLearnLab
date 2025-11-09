@@ -7,9 +7,8 @@ from django.contrib.auth import login, logout, authenticate
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from django.contrib import messages
 
-
 # ------------------------------
-# Function-Based View (FBV)
+# Function-Based View (FBV) for listing books
 # ------------------------------
 def list_books(request):
     """
@@ -20,18 +19,18 @@ def list_books(request):
     books = Book.objects.all()  # Explicitly use .all()
     return render(request, 'relationship_app/list_books.html', {'books': books})
 
-
 # ------------------------------
-# Class-Based View (CBV)
+# Class-Based View (CBV) for library details
 # ------------------------------
 class LibraryDetailView(DetailView):
     """
     Display details for a specific library.
     """
     model = Library
-    template_name = 'relationship_app/library_detail.html'  # Template path updated
+    template_name = 'relationship_app/library_detail.html'  # Template path
     context_object_name = 'library'
 
+# ------------------------------
 # User Registration View
 # ------------------------------
 def register_view(request):
