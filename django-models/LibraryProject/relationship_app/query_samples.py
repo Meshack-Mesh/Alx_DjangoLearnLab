@@ -1,11 +1,11 @@
 import os
 import django
 
-# Configure the Django environment
+# Configure Django environment
 os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'LibraryProject.settings')
 django.setup()
 
-from relationship_app.models import Author, Book, Library
+from relationship_app.models import Author, Book, Library, Librarian
 
 
 def query_books_by_author(author_name):
@@ -27,7 +27,7 @@ def query_books_in_library(library_name):
     """List all books in a specific library using filter()"""
     try:
         library = Library.objects.get(name=library_name)
-        books = library.books.all()  # ManyToMany relation access
+        books = library.books.all()  # Access ManyToMany relationship
         if books.exists():
             print(f"Books in {library.name}:")
             for book in books:
@@ -39,14 +39,14 @@ def query_books_in_library(library_name):
 
 
 def query_librarian_for_library(library_name):
-    """Retrieve the librarian for a library"""
+    """Retrieve the librarian for a library using Librarian.objects.get(library=...)"""
     try:
         library = Library.objects.get(name=library_name)
-        librarian = library.librarian
+        librarian = Librarian.objects.get(library=library)
         print(f"The librarian for {library.name} is {librarian.name}.")
     except Library.DoesNotExist:
         print("Library not found.")
-    except Exception:
+    except Librarian.DoesNotExist:
         print("No librarian assigned to this library.")
 
 
