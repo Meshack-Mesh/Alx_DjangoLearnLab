@@ -1,27 +1,28 @@
 from django.shortcuts import render
-from django.http import HttpResponse
-from .models import Book, Library
 from django.views.generic import DetailView
+from .models import Book, Library
 
 
 # ------------------------------
-# Function-Based View
+# Function-Based View (FBV)
 # ------------------------------
 def list_books(request):
     """
-    Function-based view to list all books with their authors.
+    List all books with their authors.
+    Uses Book.objects.all() explicitly.
+    Renders the template at relationship_app/list_books.html
     """
-    books = Book.objects.select_related('author').all()
-    return render(request, 'list_books.html', {'books': books})
+    books = Book.objects.all()  # Explicitly use .all()
+    return render(request, 'relationship_app/list_books.html', {'books': books})
 
 
 # ------------------------------
-# Class-Based View
+# Class-Based View (CBV)
 # ------------------------------
 class LibraryDetailView(DetailView):
     """
-    Class-based view to show details of a specific library and its books.
+    Display details for a specific library.
     """
     model = Library
-    template_name = 'library_detail.html'
+    template_name = 'relationship_app/library_detail.html'  # Template path updated
     context_object_name = 'library'
