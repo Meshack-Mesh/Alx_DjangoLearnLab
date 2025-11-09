@@ -16,6 +16,11 @@ class LibraryDetailView(DetailView):
     template_name = 'relationship_app/library_detail.html'
     context_object_name = 'library'
 
+    # Authentication URLs
+    path('register/', views.register_view, name='register'),
+    path('login/', LoginView.as_view(template_name='relationship_app/login.html'), name='login'),
+    path('logout/', LogoutView.as_view(template_name='relationship_app/logout.html'), name='logout'),
+
 # Registration view
 def register_view(request):
     if request.method == 'POST':
