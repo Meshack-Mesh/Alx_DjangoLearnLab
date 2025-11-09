@@ -53,13 +53,19 @@ def admin_view(request):
 
 # Librarian-only view
 @user_passes_test(is_librarian)
-@login_required
 def librarian_view(request):
+    """
+    View accessible only to users with the 'Librarian' role.
+    """
     return render(request, 'relationship_app/librarian_view.html')
 
 
 # Member-only view
 @user_passes_test(is_member)
-@login_required
 def member_view(request):
+    """
+    View accessible only to users with the 'Member' role.
+    """
     return render(request, 'relationship_app/member_view.html')
+
+
