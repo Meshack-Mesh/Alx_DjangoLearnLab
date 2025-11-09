@@ -22,7 +22,7 @@ class LibraryDetailView(DetailView):
     path('logout/', LogoutView.as_view(template_name='relationship_app/logout.html'), name='logout'),
 
 # Registration view
-def register_view(request):
+def register(request):
     if request.method == 'POST':
         form = UserCreationForm(request.POST)
         if form.is_valid():
