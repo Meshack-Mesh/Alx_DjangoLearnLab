@@ -1,9 +1,9 @@
 from django.shortcuts import render, redirect
 from django.views.generic.detail import DetailView
-from .models import Book, Library
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth import login
 from django.contrib import messages
+from .models import Book, Library
 
 # Function-Based View (FBV) for listing books
 def list_books(request):
@@ -16,11 +16,6 @@ class LibraryDetailView(DetailView):
     template_name = 'relationship_app/library_detail.html'
     context_object_name = 'library'
 
-    # Authentication URLs
-    path('register/', views.register_view, name='register'),
-    path('login/', LoginView.as_view(template_name='relationship_app/login.html'), name='login'),
-    path('logout/', LogoutView.as_view(template_name='relationship_app/logout.html'), name='logout'),
-
 # Registration view
 def register(request):
     if request.method == 'POST':
@@ -31,7 +26,7 @@ def register(request):
             messages.success(request, "Registration successful.")
             return redirect('list_books')
         else:
-            messages.error(request, "Registration failed. Please fix the errors.")
+            messages.error(request, "Registration failed. Please correct the errors below.")
     else:
         form = UserCreationForm()
     return render(request, 'relationship_app/register.html', {'form': form})
