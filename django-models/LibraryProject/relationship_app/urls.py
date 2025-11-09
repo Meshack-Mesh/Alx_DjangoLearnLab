@@ -1,16 +1,14 @@
 from django.urls import path
 from django.contrib.auth.views import LoginView, LogoutView
-from .views import (
-    list_books,
-    LibraryDetailView,
-    register,
-    admin_view,
-    librarian_view,
-    member_view,
-    add_book,
-    edit_book,
-    delete_book,
-)
+from .views import list_books
+from .views import LibraryDetailView
+from .views import register
+from .views import admin_view
+from .views import librarian_view
+from .views import member_view
+from .views import add_book
+from .views import edit_book
+from .views import delete_book
 
 urlpatterns = [
     # Book and library URLs
