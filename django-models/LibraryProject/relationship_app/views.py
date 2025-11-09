@@ -5,7 +5,45 @@ from django.contrib.auth import login
 from django.contrib import messages
 from .models import Book, Library
 from django.contrib.auth.decorators import user_passes_test, login_required
-from django.shortcuts import render
+from django.contrib.auth.decorators import permission_required
+from .forms import BookForm  # You will need a ModelForm for Book
+
+# ---------------- Add Book ----------------
+@permission_required('relationship_app.can_add_book', raise_exception=True)
+def add_book(request):
+    if request.method == 'POST':
+        form = BookForm(request.POST)
+        if form.is_valid():
+            form.save()
+            messages.success(request, "Book added successfully.")
+            return redirect('list_books')
+    else:
+        form = BookForm()
+    return render(request, 'relationship_app/book_form.html', {'form': form})
+
+# ---------------- Edit Book ----------------
+@permission_required('relationship_app.can_change_book', raise_exception=True)
+def edit_book(request, pk):
+    book = Book.objects.get(pk=pk)
+    if request.method == 'POST':
+        form = BookForm(request.POST, instance=book)
+        if form.is_valid():
+            form.save()
+            messages.success(request, "Book updated successfully.")
+            return redirect('list_books')
+    else:
+        form = BookForm(instance=book)
+    return render(request, 'relationship_app/book_form.html', {'form': form})
+
+# ---------------- Delete Book ----------------
+@permission_required('relationship_app.can_delete_book', raise_exception=True)
+def delete_book(request, pk):
+    book = Book.objects.get(pk=pk)
+    if request.method == 'POST':
+        book.delete()
+        messages.success(request, "Book deleted successfully.")
+        return redirect('list_books')
+    return render(request, 'relationship_app/book_confirm_delete.html', {'book': book})
 
 # Function-Based View (FBV) for listing books
 def list_books(request):
