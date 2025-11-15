@@ -1,7 +1,6 @@
 from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin
 from .models import CustomUser
-
 from .models import Book
 
 @admin.register(Book)
@@ -10,7 +9,6 @@ class BookAdmin(admin.ModelAdmin):
     list_filter = ('publication_year', 'author')             # Filters on the right sidebar
     search_fields = ('title', 'author')                      # Search box fields
 
-@admin.register(CustomUser)
 class CustomUserAdmin(UserAdmin):
     model = CustomUser
     list_display = ('username', 'email', 'date_of_birth', 'is_staff', 'is_active')
@@ -21,7 +19,7 @@ class CustomUserAdmin(UserAdmin):
     fieldsets = (
         (None, {'fields': ('username', 'email', 'password')}),
         ('Personal Info', {'fields': ('date_of_birth', 'profile_photo')}),
-        ('Permissions', {'fields': ('is_staff', 'is_active', 'is_superuser', 'groups', 'user_permissions')}),
+        ('Permissions', {'fields': ('is_staff', 'is_active', 'is_superuser', 'groups', 'user_permissions')}), 
     )
 
     add_fieldsets = (
@@ -39,5 +37,6 @@ class CustomUserAdmin(UserAdmin):
             ),
         }),
     )
+
 
 admin.site.register(CustomUser, CustomUserAdmin)

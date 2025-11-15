@@ -23,7 +23,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-9+=wlv_ff10j&)zg0v8_ocrog#oxdiue)!ih1o7=-!y*&%4g5w'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
 ALLOWED_HOSTS = []
 
@@ -49,7 +49,14 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-]
+    'csp.middleware.CSPMiddleware',
+    ]
+# Example CSP policy
+CSP_DEFAULT_SRC = ("'self'",)
+CSP_SCRIPT_SRC = ("'self'", "https://cdnjs.cloudflare.com")
+CSP_STYLE_SRC = ("'self'", "https://cdnjs.cloudflare.com")
+
+
 
 ROOT_URLCONF = 'LibraryProject.urls'
 
@@ -132,3 +139,30 @@ AUTH_USER_MODEL = 'bookshelf.CustomUser'
 # Media settings (for profile photos)
 MEDIA_URL = '/media/'
 MEDIA_ROOT = BASE_DIR / 'media'
+
+# 2. Allowed hosts
+ALLOWED_HOSTS = ['yourdomain.com', 'www.yourdomain.com']
+
+# 3. Browser protections
+SECURE_BROWSER_XSS_FILTER = True
+SECURE_CONTENT_TYPE_NOSNIFF = True
+X_FRAME_OPTIONS = 'DENY'  # Prevent clickjacking
+
+# 4. HTTPS settings for cookies
+CSRF_COOKIE_SECURE = True
+SESSION_COOKIE_SECURE = True
+
+# Optional: redirect all HTTP to HTTPS
+SECURE_SSL_REDIRECT = True
+
+# Optional: HSTS (HTTP Strict Transport Security)
+SECURE_HSTS_SECONDS = 31536000  # 1 year
+SECURE_HSTS_INCLUDE_SUBDOMAINS = True
+SECURE_HSTS_PRELOAD = True
+
+# 5. Other security settings
+SECURE_REFERRER_POLICY = 'strict-origin-when-cross-origin'
+
+# CSRF_COOKIE_SECURE ensures cookies are only sent over HTTPS.
+# X_FRAME_OPTIONS prevents clickjacking attacks.
+# SECURE_CONTENT_TYPE_NOSNIFF prevents browsers from guessing content types.
