@@ -1,5 +1,6 @@
 # LibraryProject/bookshelf/views.py
 from django.shortcuts import render, get_object_or_404, redirect
+from django.contrib.auth.decorators import permission_required   # <-- ADD THIS LINE
 from .models import Book
 from .forms import BookForm, BookSearchForm
 
@@ -22,3 +23,15 @@ def search_books(request):
         query = form.cleaned_data['query']
         books = Book.objects.filter(title__icontains=query)
     return render(request, 'bookshelf/search_results.html', {'form': form, 'books': books})
+
+@permission_required('bookshelf.can_view', raise_exception=True)
+def book_list(request):
+    """
+    View to list all books.
+    Only accessible to users with 'can_view' permission.
+    """
+    books = Book.objects.all()
+    context = {
+        'books': books
+    }
+    return render(request, 'bookshelf/book_list.html', context)
