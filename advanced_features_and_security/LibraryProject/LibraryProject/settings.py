@@ -162,6 +162,7 @@ SECURE_HSTS_PRELOAD = True
 
 # 5. Other security settings
 SECURE_REFERRER_POLICY = 'strict-origin-when-cross-origin'
+SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
 
 # CSRF_COOKIE_SECURE ensures cookies are only sent over HTTPS.
 # X_FRAME_OPTIONS prevents clickjacking attacks.
