@@ -1,8 +1,10 @@
 # LibraryProject/bookshelf/views.py
 from django.shortcuts import render, get_object_or_404, redirect
-from django.contrib.auth.decorators import permission_required   # <-- ADD THIS LINE
+from django.contrib.auth.decorators import permission_required
 from .models import Book
 from .forms import BookForm, BookSearchForm
+from .forms import ExampleForm
+
 
 # Add a new book
 def add_book(request):
@@ -30,8 +32,9 @@ def book_list(request):
     View to list all books.
     Only accessible to users with 'can_view' permission.
     """
-    books = Book.objects.all()
+    books = Book.objects.all()  # Query all books
     context = {
-        'books': books
+        'books': books,
+        'example_form': ExampleForm()   # ← Optional: include ExampleForm if needed in template
     }
     return render(request, 'bookshelf/book_list.html', context)
