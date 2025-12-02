@@ -1,5 +1,6 @@
 # blog/forms.py
 from django import forms
+from .models import Post
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
 from .models import Profile
@@ -30,3 +31,12 @@ class UserUpdateForm(forms.ModelForm):
     class Meta:
         model = User
         fields = ("username", "email")
+        
+class PostForm(forms.ModelForm):
+    class Meta:
+        model = Post
+        fields = ['title', 'content']
+        widgets = {
+            'title': forms.TextInput(attrs={'placeholder': 'Enter a title', 'class': 'form-control'}),
+            'content': forms.Textarea(attrs={'placeholder': 'Write the content here...', 'rows': 10, 'class': 'form-control'}),
+        }
