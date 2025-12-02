@@ -1,24 +1,28 @@
-# blog/urls.py
 from django.urls import path
 from django.contrib.auth import views as auth_views
 from . import views
+from .views import (
+    PostListView,
+    PostDetailView,
+    PostCreateView,
+    PostUpdateView,
+    PostDeleteView,
+)
 
 app_name = "blog"
 
 urlpatterns = [
+    # Authentication
     path("register/", views.register_view, name="register"),
     path("profile/", views.profile_view, name="profile"),
-
-    # Login / logout using Django's built-ins
     path("login/", auth_views.LoginView.as_view(template_name="blog/login.html"), name="login"),
     path("logout/", auth_views.LogoutView.as_view(template_name="blog/logout.html"), name="logout"),
-    path('register/', views.register_view, name='register'),  # if you used earlier register_view
-    path('profile/', views.profile_view, name='profile'),      # if you used earlier profile_view
-   
-    path('posts/', views.PostListView.as_view(), name='post_list'),
-    path('posts/new/', views.PostCreateView.as_view(), name='post_create'),
-    path('posts/<int:pk>/', views.PostDetailView.as_view(), name='post_detail'),
-    path('posts/<int:pk>/edit/', views.PostUpdateView.as_view(), name='post_update'),
-    path('posts/<int:pk>/delete/', views.PostDeleteView.as_view(), name='post_delete'),
 
+    # Blog posts CRUD
+    path("", PostListView.as_view(), name="post_list"),                      # Home page / list
+    path("posts/", PostListView.as_view(), name="post_list"),                # Optional: alias
+    path("posts/new/", PostCreateView.as_view(), name="post_create"),
+    path("posts/<int:pk>/", PostDetailView.as_view(), name="post_detail"),
+    path("posts/<int:pk>/edit/", PostUpdateView.as_view(), name="post_update"),
+    path("posts/<int:pk>/delete/", PostDeleteView.as_view(), name="post_delete"),
 ]
