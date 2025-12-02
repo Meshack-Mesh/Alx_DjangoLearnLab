@@ -5,7 +5,7 @@ from django.conf.urls.static import static
 
 urlpatterns = [
     path("admin/", admin.site.urls),
-    path("", include("blog.urls", namespace="blog")),  # adjust root if you want a home page
+   path('', include('blog.urls')),  
 ]
 
 if settings.DEBUG:
