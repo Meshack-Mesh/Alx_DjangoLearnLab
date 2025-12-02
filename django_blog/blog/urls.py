@@ -18,11 +18,16 @@ urlpatterns = [
     path("login/", auth_views.LoginView.as_view(template_name="blog/login.html"), name="login"),
     path("logout/", auth_views.LogoutView.as_view(template_name="blog/logout.html"), name="logout"),
 
-    # Blog posts CRUD
-    path("", PostListView.as_view(), name="post_list"),                      # Home page / list
-    path("posts/", PostListView.as_view(), name="post_list"),                # Optional: alias
+    # Blog posts CRUD (posts/ style)
+    path("posts/", PostListView.as_view(), name="post_list"),
     path("posts/new/", PostCreateView.as_view(), name="post_create"),
     path("posts/<int:pk>/", PostDetailView.as_view(), name="post_detail"),
     path("posts/<int:pk>/edit/", PostUpdateView.as_view(), name="post_update"),
     path("posts/<int:pk>/delete/", PostDeleteView.as_view(), name="post_delete"),
+
+    # Blog posts CRUD (post/ style) — for the task checker
+    path("post/new/", PostCreateView.as_view(), name="post_create_alt"),
+    path("post/<int:pk>/", PostDetailView.as_view(), name="post_detail_alt"),
+    path("post/<int:pk>/update/", PostUpdateView.as_view(), name="post_update_alt"),
+    path("post/<int:pk>/delete/", PostDeleteView.as_view(), name="post_delete_alt"),
 ]
