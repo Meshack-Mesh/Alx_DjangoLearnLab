@@ -1,6 +1,6 @@
 # blog/forms.py
 from django import forms
-from .models import Post
+from .models import Post, Comment
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
 from .models import Profile
@@ -40,3 +40,13 @@ class PostForm(forms.ModelForm):
             'title': forms.TextInput(attrs={'placeholder': 'Enter a title', 'class': 'form-control'}),
             'content': forms.Textarea(attrs={'placeholder': 'Write the content here...', 'rows': 10, 'class': 'form-control'}),
         }
+        
+class CommentForm(forms.ModelForm):
+    content = forms.CharField(
+        widget=forms.Textarea(attrs={'rows':3, 'placeholder': 'Write your comment...'}),
+        label=''
+    )
+
+    class Meta:
+        model = Comment
+        fields = ['content']
