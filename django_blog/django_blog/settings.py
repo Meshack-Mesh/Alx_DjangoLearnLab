@@ -28,6 +28,9 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'blog',
+
+      # Third-party apps
+    'taggit',
 ]
 
 MIDDLEWARE = [
