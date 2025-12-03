@@ -10,6 +10,7 @@ from .views import (
     CommentCreateView,
     CommentUpdateView,
     CommentDeleteView,
+    PostByTagListView,  # <- add this
 )
 
 app_name = "blog"
@@ -20,8 +21,12 @@ urlpatterns = [
     path("profile/", views.profile_view, name="profile"),
     path("login/", auth_views.LoginView.as_view(template_name="blog/login.html"), name="login"),
     path("logout/", auth_views.LogoutView.as_view(template_name="blog/logout.html"), name="logout"),
-    path('search/', search_posts, name='search_posts'),
-    path('tags/<str:tag_name>/', posts_by_tag, name='posts_by_tag'),
+
+    # Search
+    path('search/', views.search_posts, name='search_posts'),
+
+    # Tags
+    path('tags/<slug:tag_slug>/', PostByTagListView.as_view(), name='posts_by_tag'),
 
     # Blog posts CRUD (posts/ style)
     path("posts/", PostListView.as_view(), name="post_list"),
@@ -36,8 +41,8 @@ urlpatterns = [
     path("post/<int:pk>/update/", PostUpdateView.as_view(), name="post_update_alt"),
     path("post/<int:pk>/delete/", PostDeleteView.as_view(), name="post_delete_alt"),
 
-    # ----- Comment actions -----
-path("post/<int:pk>/comments/new/", CommentCreateView.as_view(), name="comment_create"),
-path("comment/<int:pk>/update/", CommentUpdateView.as_view(), name="comment_update"),
-path("comment/<int:pk>/delete/", CommentDeleteView.as_view(), name="comment_delete"),
+    # Comment actions
+    path("post/<int:pk>/comments/new/", CommentCreateView.as_view(), name="comment_create"),
+    path("comment/<int:pk>/update/", CommentUpdateView.as_view(), name="comment_update"),
+    path("comment/<int:pk>/delete/", CommentDeleteView.as_view(), name="comment_delete"),
 ]
